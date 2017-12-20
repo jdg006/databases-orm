@@ -1,0 +1,62 @@
+1. What's a RubyGem and why would you use one?
+
+A ruby gem is an extension or a library that adds functions that make it easier to accomplish a 
+given task. You would use one in a situation where you would want shortcuts to solve problems that
+can be reused throughout different projects. You would not create a gem that extended a library if 
+you were only going to use it once You would likely code whatever you did in the gem into the project
+itself, but if you wanted those shorcuts to be available in every project you do then you would create
+a ruby gem in order to accomplish this while not having to re-write certain bits of code for each project.
+
+2. What's the difference between lazy and eager loading?
+
+Lazy loading does calculations to create a certain object only when that object is needed. Eager loading 
+pre-calculates all calculations required by an object when that object is initialized.
+
+3. What's the difference between the CREATE TABLE and INSERT INTO SQL statements?
+
+CREATE TABLE literally creates a table. INSERT INTO puts values into a table. Not sure how you expected a full
+paragraph from this one. 
+
+4. What's the difference between extend and include? When would you use one or the other?
+
+Include provides an added method (or methods) for instances of a class whereas extend adds methods to a whole class. You would 
+use include when you wanted to add a method to an instance of a class that would only affect that instance instead of the entire class
+that it is an instance of. You would use extend when you wanted to add a method that could affect an entire class, but not the instances
+of that class.
+
+5. In persistence.rb, why do the save methods need to be instance (vs. class) methods?
+
+They need to be instance methods because the 'Base' class that the 'persistence' module is included in is a class in which many different instances 
+of that class will be created in the program. You must be able to save the individual instances of the base class so that you can potentially decide 
+not to save certain instances that are either incomplete or are purposefully discarded due to mistakes or lack of need for the instance.
+
+6. Given the Jar-Jar Binks example earlier, what is the final SQL query in persistence.rb's save! method?
+
+UPDATE Character
+SET character_name = 'Jar-Jar Binks', star_rating = 1
+WHERE id = (jar-jar's id);
+
+7. AddressBook's entries instance variable no longer returns anything. We'll fix this in a later checkpoint. What changes will we need to make?
+
+I think there is a mistake in the question. A variable (so far as I know) doesn't return anything ever. A method returns something, but a variable only stores 
+values. If this question asked: "Now that the initialize method was removed from the class, What changes do we need to make to make the entries class function 
+with the rest of the program?" My answer would be that we now need to find a way to relate an instance of AddressBook to Entry. 
+
+8. Write a Ruby method that converts snake_case to CamelCase using regular expressions (you can test them on Rubular). Send your code to your mentor.
+
+def to_camel_case(snake_case)
+
+    snake_case.gsub(/(?:_|^)(\w)/){$1.upcase}
+
+end
+
+9. def find_by(attribute, value)
+      
+       return_array = self.class.connection.execute <<-SQL
+           SELECT #{attribute} 
+           FROM #{self.class.table}
+           WHERE #{attribute} = #{value};
+       SQL
+       
+       return_array
+   end
