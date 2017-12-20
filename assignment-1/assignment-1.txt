@@ -1,79 +1,27 @@
-1. FOR EACH name IN User
-    IF name == 'joe'
-        selected_name = name
-        BREAK
-    END If
-   END FOR
+1. User.where(name: 'joe').distinct
    
   SELECT DISTINCT name FROM user where name = 'joe';
   
-2. results = []
-   FOR EACH row IN User
-    IF row.eamil != nil 
-        results.push(row.email)
-    END IF
-   END FOR
+2. User.where.not(email: null)
    
    SELECT * FROM user WHERE email is NOT NULL
     
-3. sort(User.all)
+3. User.order(:id)
 
    SELECT * FROM user ORDER BY id;
    
-4. FOR EACH name IN User
-    IF name == 'joe'
-        selected_name = name
-        BREAK
-    END If
-   END FOR
+4. User.where(name: 'joe').take
 
    SELECT * FROM user WHERE name = 'joe' LIMIT 1;
 
-5.  results = []
-    FOR EACH comment IN Comment 
-      IF comment.user_id IN results
-        next
-      ELSE
-        results.push(comment.user_id)
-      END IF
-    END FOR
+5.  User.select('user_id').group('user_id')
 
    SELECT user_id FROM comment GROUP BY user_id;
    
-6. results = []
-   all_values = []
-   unique_values = []
-   FOR EACH comment IN Comment
-      all_values.push(comment.user_id)
-      IF comment.user_id IN unique_values
-        next
-      ELSE
-        unique_values.push(comment.user_id)
-      END IF
-    END FOR
-    
-    FOR EACH x IN unique_values
-        count = 0
-        FOR EACH y IN all_values
-            IF x == y
-            count ++
-            END IF
-        END FOR
-        results.push(count)
-    END FOR
-    
-    return results
+6. User.select('count(user_id) as count').group(user_id)
      
-
   SELECT COUNT(*) FROM comment GROUP BY user_id;
 
-7. results = []
-   FOR EACH row IN User 
-     FOR EACH comment in Comment
-        IF row.id = comment.user_id
-            results.push([row, comment])
-        END IF
-     END FOR
-    END FOR
-  
+7. User.joins('inner join comment'on user.id)= comment.user_id')
+    
   SELECT * from user join comment on user.id = comment.user_id;
